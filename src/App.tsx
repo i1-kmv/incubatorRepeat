@@ -15,7 +15,9 @@ export type FilterValuesType = "all" | "active" | "completed";
         { id: v1(), title: "GraphQL", isDone: false },
     ]);
 
-    function removeTask(id: string) {
+     let [filter, setFilter] = useState<FilterValuesType>("all");
+
+    const removeTask = (id: string) => {
         let filteredTasks = tasks.filter(t => t.id !== id);
         setTasks(filteredTasks);
     }
@@ -24,7 +26,13 @@ export type FilterValuesType = "all" | "active" | "completed";
         setTasks([{id:v1(), title: title, isDone: false}, ...tasks])
     }
 
-    let [filter, setFilter] = useState<FilterValuesType>("all");
+    const changeTaskStatus = (taskid:string, isDone:boolean) => {
+        let task = tasks.find(t => t.id === taskid)
+        if (task) {
+            task.isDone = isDone
+        }
+        setTasks([...tasks])
+    }
 
     let tasksForTodolist = tasks;
 
@@ -46,6 +54,8 @@ export type FilterValuesType = "all" | "active" | "completed";
                       removeTask={removeTask}
                       changeFilter={changeFilter}
                       addTask={addTask}
+                      changeTaskStatus={changeTaskStatus}
+                      filter={filter}
             />
         </div>
     );
