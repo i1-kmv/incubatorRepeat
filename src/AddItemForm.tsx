@@ -1,6 +1,7 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
-import {Button} from "@material-ui/core";
+import {Button, IconButton} from "@material-ui/core";
 import TextField from '@material-ui/core/TextField';
+import {ControlPoint} from "@material-ui/icons";
 
 export type AddItemFormType = {
     addItem: (title: string) => void
@@ -41,16 +42,12 @@ export const AddItemForm = (props: AddItemFormType) => {
                        error={!!error} size={'small'}
                        label={'type value'}
             />
-            <Button
-                variant="contained"
-                color="primary"
+            <IconButton
                 onClick={() => addItem(title)}
-                disableElevation
-                size="small"
-
+                color={"primary"}
             >
-                +
-            </Button>
+                <ControlPoint/>
+            </IconButton>
             {error ? <div className="error-message">Field is required</div> : null}
         </div>
     )

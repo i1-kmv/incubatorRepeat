@@ -32,6 +32,7 @@ export const EditableSpan = (props:EditableSpanPropsType) => {
                        autoFocus
                        onChange={changeTitle}
                        onBlur={deactivateEditMode}
+                       size={'small'}
 
             />
             :
