@@ -1,10 +1,10 @@
 import {TaskStateType, TodolistType} from "../App";
-import {RemoveTodolistActionType} from "./todolists-reducer";
+import {AddTodolistActionType, RemoveTodolistActionType} from "./todolists-reducer";
 import {v1} from "uuid";
-import {setImmediate} from "timers";
 
 
-type ActionsType = RemoveTaskActionType | AddTaskActionType | ChangeTaskStatusActionType | ChangeTaskTitleActionType
+
+type ActionsType = RemoveTaskActionType | AddTaskActionType | ChangeTaskStatusActionType | ChangeTaskTitleActionType | AddTodolistActionType | RemoveTodolistActionType
 
 type  RemoveTaskActionType = {
     type: 'REMOVE-TASK'
@@ -63,6 +63,16 @@ export const tasksReducer = (state: TaskStateType, action: ActionsType): TaskSta
                 task.title = action.title
             }
             return {...state}
+        }
+        case "ADD-TODOLIST": {
+            const stateCopy = {...state}
+            stateCopy[action.todolistId] = []
+            return stateCopy
+        }
+        case "REMOVE-TODOLIST": {
+            const stateCopy = {...state}
+            delete stateCopy[action.id]
+            return stateCopy
         }
         default:
             throw new Error('It is bad')
