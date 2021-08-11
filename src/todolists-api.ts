@@ -1,4 +1,5 @@
 import axios from 'axios'
+import {FilterValuesType} from "./App";
 
 const settings = {
     withCredentials: true,
@@ -66,6 +67,15 @@ export type TodolistType = {
     addedDate: string
     order: number
 }
+
+export type TodolistDomainType = {
+    id: string
+    title: string
+    addedDate: string
+    order: number
+    filter: FilterValuesType
+}
+
 export type ResponseType<D = {}> = {
     resultCode: number
     messages: Array<string>
