@@ -33,10 +33,10 @@ export const todolistsAPI = {
         return instance.delete<ResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`);
     },
     createTask(todolistId: string, taskTitile: string) {
-        return instance.post<ResponseType<{ item: TaskType }>>(`todo-lists/${todolistId}/tasks`, {title: taskTitile});
+        return instance.post<ResponseType<{ item: TaskResponseType }>>(`todo-lists/${todolistId}/tasks`, {title: taskTitile});
     },
     updateTask(todolistId: string, taskId: string, model: UpdateTaskModelType) {
-        return instance.put<ResponseType<TaskType>>(`todo-lists/${todolistId}/tasks/${taskId}`, model);
+        return instance.put<ResponseType<TaskResponseType>>(`todo-lists/${todolistId}/tasks/${taskId}`, model);
     }
 }
 
@@ -66,6 +66,7 @@ export type TodolistType = {
     title: string
     addedDate: string
     order: number
+    filter: FilterValuesType
 }
 
 export type TodolistDomainType = {
@@ -73,7 +74,6 @@ export type TodolistDomainType = {
     title: string
     addedDate: string
     order: number
-    filter: FilterValuesType
 }
 
 export type ResponseType<D = {}> = {
@@ -97,7 +97,7 @@ export enum TaskPriorities {
     Later = 4
 }
 
-export type TaskType = {
+export type TaskResponseType = {
     description: string
     title: string
     status: TaskStatuses
@@ -108,6 +108,7 @@ export type TaskType = {
     todoListId: string
     order: number
     addedDate: string
+    isDone:boolean
 }
 
 export type UpdateTaskModelType = {
@@ -122,6 +123,6 @@ export type UpdateTaskModelType = {
 type GetTasksResponse = {
     error: string | null
     totalCount: number
-    items: TaskType[]
+    items: TaskResponseType[]
 }
 
