@@ -150,3 +150,25 @@ export const fetchTasksTC = (id:string) => {
             })
     }
 }
+
+export const removeTaskTC =  (id:string, todolistId:string) => {
+    return (dispatch: Dispatch) => {
+        todolistsAPI.deleteTask(id,todolistId)
+            .then(res => {
+                    const action = removeTaskAC(id, todolistId)
+                    dispatch(action)
+                }
+            )
+    }
+}
+
+export const addTaskTC =  (title:string, todolistId:string) => {
+    return (dispatch: Dispatch) => {
+        todolistsAPI.createTask(title,todolistId)
+            .then(res => {
+                    const action = addTaskAC(title, todolistId)
+                    dispatch(action)
+                }
+            )
+    }
+}

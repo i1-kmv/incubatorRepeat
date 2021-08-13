@@ -4,7 +4,7 @@ import {FilterValuesType} from "./App";
 const settings = {
     withCredentials: true,
     headers: {
-        'API-KEY': '56fad98b-2e41-4f65-9dcd-55f6906b4c63'
+        'API-KEY': 'ef2d9c5a-d881-472f-8312-e4f2b5181b7c'
     }
 }
 const instance = axios.create({
@@ -29,10 +29,10 @@ export const todolistsAPI = {
     getTasks(todolistId: string) {
         return instance.get<GetTasksResponse>(`todo-lists/${todolistId}/tasks`);
     },
-    deleteTask(todolistId: string, taskId: string) {
+    deleteTask(taskId: string, todolistId: string ) {
         return instance.delete<ResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`);
     },
-    createTask(todolistId: string, taskTitile: string) {
+    createTask(taskTitile: string, todolistId: string) {
         return instance.post<ResponseType<{ item: TaskResponseType }>>(`todo-lists/${todolistId}/tasks`, {title: taskTitile});
     },
     updateTask(todolistId: string, taskId: string, model: UpdateTaskModelType) {

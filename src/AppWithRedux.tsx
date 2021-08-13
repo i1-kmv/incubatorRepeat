@@ -13,10 +13,10 @@ import {
     todolistsReducer
 } from "./state/todolists-reducer";
 import {
-    addTaskAC,
+    addTaskAC, addTaskTC,
     changeTaskStatusAC,
     changeTaskTitleAC,
-    removeTaskAC,
+    removeTaskAC, removeTaskTC,
     setTodolistsAC,
     tasksReducer
 } from "./state/tasks-reducer";
@@ -42,17 +42,15 @@ export function AppWithRedux() {
     const tasks = useSelector<AppRootState, TaskStateType>(state => state.tasks)
 
     useEffect(() => {
-        dispatch(fetchTodolistsTC)
-    })
+        dispatch(fetchTodolistsTC())
+    },[dispatch])
 
     const removeTask = useCallback((id: string, todolistId:string) => {
-        const action = removeTaskAC(id, todolistId)
-        dispatch(action)
+       dispatch(removeTaskTC(id, todolistId))
     },[dispatch])
 
     const addTask = useCallback((title: string, todolistId: string) => {
-        const action = addTaskAC(title, todolistId)
-        dispatch(action)
+        dispatch(addTaskTC(title, todolistId))
     },[dispatch])
 
     const changeTaskStatus = useCallback((taskid: string, isDone: boolean, todolistId:string) => {
