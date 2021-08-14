@@ -18,8 +18,7 @@ type  RemoveTaskActionType = {
 
 type AddTaskActionType = {
     type: 'ADD-TASK'
-    title: string
-    todolistId: string
+    task:TaskResponseType
 }
 
 type ChangeTaskStatusActionType = {
@@ -72,11 +71,12 @@ export const tasksReducer = (state: TaskStateType = initialState, action: Action
             return {...state}
         }
         case 'ADD-TASK': {
-            let tasks = state[action.todolistId]
-            let task =  {id: '4', title: action.title, isDone:false }
-            let newTasks = [task, ...tasks]
-            state[action.todolistId] = newTasks
-            return {...state}
+            const stateCopy = {...state}
+            const newTask = action.task
+            const tasks = stateCopy[newTask.todoListId]
+            const newTasks = [newTask, ...tasks]
+            stateCopy[newTask.todoListId] = newTasks
+            return stateCopy
         }
         case 'CHANGE-TASK-STATUS': {
             let tasks = state[action.todolistId]
@@ -120,8 +120,8 @@ export const removeTaskAC = (taskId: string, todolistId: string): RemoveTaskActi
 }
 
 
-export const addTaskAC = (title: string, todolistId: string): AddTaskActionType => {
-    return {type: 'ADD-TASK', title: title, todolistId: todolistId}
+export const addTaskAC = (task: TaskResponseType): AddTaskActionType => {
+    return {type: 'ADD-TASK', task}
 }
 
 export const changeTaskStatusAC = (taskId: string,  isDone: boolean, todolistId: string): ChangeTaskStatusActionType => {
@@ -162,11 +162,11 @@ export const removeTaskTC =  (id:string, todolistId:string) => {
     }
 }
 
-export const addTaskTC =  (title:string, todolistId:string) => {
+export const addTaskTC =  (task:TaskResponseType) => {
     return (dispatch: Dispatch) => {
-        todolistsAPI.createTask(title,todolistId)
+        todolistsAPI.createTask(task.id, task.title )
             .then(res => {
-                    const action = addTaskAC(title, todolistId)
+                    const action = addTaskAC(task)
                     dispatch(action)
                 }
             )

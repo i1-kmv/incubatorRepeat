@@ -10,6 +10,7 @@ import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import {Task} from "./Task";
 import {useDispatch} from "react-redux";
 import {fetchTasksTC} from "./state/tasks-reducer";
+import {TaskResponseType} from "./todolists-api";
 
 
 export type TaskType = {
@@ -23,7 +24,7 @@ type PropsType = {
     tasks: Array<TaskType>
     changeFilter: (value: FilterValuesType, todolistId: string) => void
     changeTodolistTitle: (newTitle: string, todolistId: string) => void
-    addTask: (title: string, id: string) => void
+    addTask: (task: TaskResponseType) => void
     removeTodolist: (id: string) => void
     removeTask: (taskId: string, todolistId: string) => void
     changeTaskStatus: (taskid: string, isDone: boolean, todolistId: string) => void
@@ -40,8 +41,8 @@ export const Todolist = React.memo((props: PropsType) => {
         dispatch(fetchTasksTC(props.id))
     },[dispatch])
 
-    const addTask = useCallback((title: string) => {
-        props.addTask(title, props.id)
+    const addTask = useCallback((task) => {
+        props.addTask(task.title)
     }, [props.addTask, props.id])
 
     const onClickAllHandler = useCallback(() => {

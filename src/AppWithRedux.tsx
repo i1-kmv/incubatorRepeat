@@ -22,7 +22,7 @@ import {
 } from "./state/tasks-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootState} from "./state/store";
-import {TodolistDomainType, todolistsAPI} from "./todolists-api";
+import {TaskResponseType, TodolistDomainType, todolistsAPI} from "./todolists-api";
 
 export type FilterValuesType = "all" | "active" | "completed";
 export type TodolistType = {
@@ -49,8 +49,8 @@ export function AppWithRedux() {
        dispatch(removeTaskTC(id, todolistId))
     },[dispatch])
 
-    const addTask = useCallback((title: string, todolistId: string) => {
-        dispatch(addTaskTC(title, todolistId))
+    const addTask = useCallback((task: TaskResponseType) => {
+        dispatch(addTaskTC(task))
     },[dispatch])
 
     const changeTaskStatus = useCallback((taskid: string, isDone: boolean, todolistId:string) => {
